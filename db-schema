@@ -1,0 +1,71 @@
+
+Table User {
+  id uuid
+  username char
+  password char
+  first_name char
+  last_name char
+  email char
+  date_joined char
+  is_superuser boolean
+  is_staff boolean
+  is_active boolean
+  last_login varchar
+}
+
+Table Profile{
+  id uuid
+  username char
+  first_name char
+  last_name char
+  email char
+  location char
+  short_intro char
+  social_github char
+  social_twitter char
+  social_website char
+  role char
+  created datetime
+}
+
+Table Directory{
+  owner char
+  title char
+  description char
+  features char
+  tags char
+  upvotes char
+  type char
+  link char
+}
+
+Table Tags{
+  id uuid
+  title char
+  description char
+}
+
+Table Type{
+  id uuid
+  title char
+  description char
+}
+
+Table Blog{
+  author char
+  title char
+  description char
+  content char
+  keyword char
+  image char
+  upvotes char
+}
+ref: User.username - Profile.username
+
+ref: Directory.tags < Tags.id
+
+ref: Directory.type < Type.id
+
+ref: Profile.username < Directory.owner
+
+ref: Profile.username < Blog.author
