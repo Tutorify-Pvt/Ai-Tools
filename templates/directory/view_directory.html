@@ -1,0 +1,19 @@
+{% extends 'header.html' %}
+
+{% block title %}
+    {{ title }}
+{% endblock %}
+
+{% block content %}
+    <h1>{{ directory.title }}</h1> <h4>{{ directory.author.username }}</h4>
+    {{ tag }} | {{ type }}
+    <hr>
+    <p>{{ directory.description }}</p>
+    <ul>
+        {% for feature in directory.features %}
+            <li>{{ feature }}</li>
+        {% endfor %}
+    </ul>
+
+    <a href="{{directory.source_link}}">Source</a>
+{% endblock %}
