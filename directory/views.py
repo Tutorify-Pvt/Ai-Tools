@@ -1,7 +1,9 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 
 from .models import *
+from .forms import *
+
 import ast
 
 
@@ -33,4 +35,32 @@ def review_directory(request):
 
 @login_required(login_url='login')
 def create_directory(request):
-    pass
+    view_data = {
+        'title': 'Create Directory',
+        'form': Directory_form()
+    }
+    if request.method == 'POST':
+        form = Directory_form(request.POST)
+
+        if form.is_valid():
+            form.save()
+            return redirect('directory_view')
+
+    return render(request, 'directory/create_directory.html', view_data)
+
+@login_required(login_url='login')
+def edit_directory(request,id):
+    form_data = Directory.objects.get(id = id)
+    view_data = {
+        'title': f'Edit Directory {form_data.title}',
+        'form': Directory_form(instance=form_data),
+        'id': id,
+    }
+    if request.method == 'POST':
+        form = Directory_form(request.POST, instance=form_data)
+
+        if form.is_valid():
+            form.save()
+            return redirect('directory_view')
+
+    return render(request, 'directory/edit_directory.html', view_data)
