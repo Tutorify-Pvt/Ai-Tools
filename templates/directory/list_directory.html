@@ -1,13 +1,68 @@
 {% extends 'header.html' %}
-
+{% load static %}
 {% block title %}
     {{ title }}
 {% endblock %}
 
+{% block styles %}
+        <link href="{% static 'style/intro-page.css' %}" rel="stylesheet">
+{% endblock %}
+
+{% block header %}
+    <div class="container" id="introduction">
+            <div class="row">
+                <div class="col">
+                    <h1>Welcome to Ai Tools</h1>
+                    <h4>An AI Tools Directory for you</h4>
+                    <br>
+                    <div class="search-field">
+                        <form class="d-flex" role="search">
+                            <div class="input-group">
+                                <input id="search" class="form-control rounded-left" type="search" placeholder="Search....." aria-label="Search">
+                                <div class="input-group-append">
+                                    <button class="btn btn-outline-success rounded-right" type="submit" id="search-btn"><div class="fa fa-search"></div></button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                   <div class="filter-field">
+                      <button type="button" class="filter-button btn btn-outline-danger">Filter <i class="fa fa-filter" aria-hidden="true"></i></button>
+                      <a class="btn btn-outline-danger prev-slide slider-button"><i class="fa fa-angle-left"></i></a>
+                      <div class="slider-container">
+                          {% for tag in tags %}
+                                <a href="{{ tag.id }}" class="btn btn-outline-danger btn-slide">{{tag.title}}</a>
+                          {% endfor %}
+                      </div>
+                      <a class="btn btn-outline-danger next-slide slider-button"><i class="fa fa-angle-right"></i></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+{% endblock %}
+
 {% block content %}
-    <ul>
-    {% for element in directory %}
-        <li><strong><a href="{% url 'get_directory' element.id %}">{{ element.title }}</a></strong> - {{ element.description }} , {{ element.active }}</li>
-    {% endfor %}
-    </ul>
+    <div class="flex-container" id="title-banner"><h2>Home</h2></div>
+    <div class="container" id="block-content">
+            <div class="row">
+                {% for element in directory %}
+                    <div class="col-lg-4 col-md-6 col-sm-12">
+                        <div class="card fixed-card-size">
+                            <img class="card-img-top fixed-image-height" src="{{ element.featured_image.url }}" alt="Card image cap">
+                            <div class="card-body d-flex flex-column">
+                                <h5 class="card-title">{{ element.title }}</h5>
+                                <p class="card-text description-truncate">{{ element.description }}</p>
+                                <a class="mt-auto btn btn-outline-danger card-button btn-block" href="{% url 'get_directory' element.id %}">More info</a>
+                            </div>
+                        </div>
+                    </div>
+                            {% if forloop.counter|divisibleby:3 and not forloop.last %}
+                                </div><div class="row">
+                            {% endif %}
+                {% endfor %}
+            </div>
+    </div>
+{% endblock %}
+
+{% block script %}
+        <link href="{% static 'javascript/intro-page.js' %}" rel="stylesheet">
 {% endblock %}

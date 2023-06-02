@@ -22,12 +22,12 @@ class Type(models.Model):
         return self.title
 
 class Directory(models.Model):
-    author = models.ForeignKey(Profile,on_delete=models.CASCADE)
+    author = models.ForeignKey(Profile, on_delete=models.CASCADE)
     id = models.UUIDField(default=uuid.uuid4, primary_key=True, editable=False, null=False, blank=False)
     title = models.CharField(max_length=200)
     description = models.TextField(null=True, blank=True)
     features = models.TextField(null=True, blank=True)
-    # featured_image = models.ImageField(null=True, blank=True, default="directory/default.jpg")
+    featured_image = models.ImageField(null=True, blank=True, upload_to="directory/", default="directory/default.png")
     source_link = models.CharField(max_length=2000, null=True, blank=True)
     created = models.DateTimeField(auto_now_add=True)
     tag = models.ManyToManyField('Tag', blank=True)
