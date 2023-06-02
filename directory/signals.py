@@ -7,7 +7,11 @@ import ast
 def update_features(sender, instance, **kwargs):
     feature = list(filter(lambda x: x, map(lambda x: x.strip() if x.strip() else None, instance.features.split('|'))))
     print(feature)
-    if feature and type(ast.literal_eval(instance.features)) is not list:
+    try:
+        feature_value = ast.literal_eval(instance.features)
+        if feature and not isinstance(feature_value, list):
+            Directory.objects.filter(id=instance.id).update(features=feature)
+    except (SyntaxError, ValueError):
         Directory.objects.filter(id=instance.id).update(features=feature)
     print(instance.id)
 

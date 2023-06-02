@@ -6,7 +6,7 @@ from .models import *
 class Directory_form(ModelForm):
     class Meta:
         model = Directory
-        fields = ['title', 'description', 'features', 'source_link', 'tag', 'types']
+        fields = ['author','title', 'description', 'features', 'source_link', 'tag', 'types']
         # fields = '__all__'
 
 
