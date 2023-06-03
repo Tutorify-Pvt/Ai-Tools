@@ -22,8 +22,35 @@ def get_directory(request, id):
     view_data = {
         'title': directory.title,
         'directory': directory,
+        'tags': directory.tag.all(),
+        'types': directory.types.all(),
     }
     return render(request, 'directory/view_directory.html', view_data)
+
+def get_tags(request, tag_id):
+    tags = Tag.objects.get(id=tag_id)
+    view_data = {
+        'title': f'{tags.title} Directories',
+        'directory': Directory.objects.filter(tag__id=tag_id),
+        'tags': Tag.objects.all(),
+        'types': Type.objects.all(),
+    }
+    return render(request, 'directory/list_directory.html', view_data)
+
+def get_type(request, type_id):
+    types = Type.objects.get(id=type_id)
+    view_data = {
+        'title': f'{types.title} Directories',
+        'directory': Directory.objects.filter(types__id=type_id),
+        'tags': Tag.objects.all(),
+        'types': Type.objects.all(),
+    }
+    return render(request, 'directory/list_directory.html', view_data)
+
+
+
+
+
 
 @login_required(login_url='login')
 def review_directory(request):
@@ -65,3 +92,4 @@ def edit_directory(request,id):
             return redirect('directory_view')
 
     return render(request, 'directory/edit_directory.html', view_data)
+
