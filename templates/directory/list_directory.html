@@ -30,7 +30,7 @@
                       <a class="btn btn-outline-danger prev-slide slider-button"><i class="fa fa-angle-left"></i></a>
                       <div class="slider-container">
                           {% for tag in tags %}
-                                <a href="{{ tag.id }}" class="btn btn-outline-danger btn-slide">{{tag.title}}</a>
+                                <a href="{% url 'get_tag' tag.id %}" class="btn btn-outline-danger btn-slide">{{tag.title}}</a>
                           {% endfor %}
                       </div>
                       <a class="btn btn-outline-danger next-slide slider-button"><i class="fa fa-angle-right"></i></a>
@@ -41,7 +41,7 @@
 {% endblock %}
 
 {% block content %}
-    <div class="flex-container" id="title-banner"><h2>Home</h2></div>
+    <div class="flex-container" id="title-banner"><h2>{{ title }}</h2></div>
     <div class="container" id="block-content">
             <div class="row">
                 {% for element in directory %}
@@ -56,7 +56,7 @@
                         </div>
                     </div>
                             {% if forloop.counter|divisibleby:3 and not forloop.last %}
-                                </div><div class="row">
+                                </div><div class="row mt-2">
                             {% endif %}
                 {% endfor %}
             </div>
